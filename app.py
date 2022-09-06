@@ -14,5 +14,12 @@ def sunrise_sunset():
     lng = 14.46667
     return requests.get(url=url, params={'lat':lat, 'lng':lng}).json()
 
+@app.route('/nominatim')
+def nominatim():
+    url = 'https://nominatim.openstreetmap.org/reverse'
+    lat = 50.08333
+    lng = 14.46667
+    return requests.get(url=url, params={'format': 'jsonv2', 'lat':lat, 'lon':lng}).json()
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT',5000))

@@ -47,7 +47,9 @@ def sunrise_sunset():
     url = 'https://api.sunrise-sunset.org/json'
     lat=request.args['lat']
     lon=request.args['lon']
-    return requests.get(url=url, headers={'Access-Control-Allow-Origin':'http://localhost:4200'}, params={'lat':lat, 'lng':lon}).json()
+    resp = flask.Response(requests.get(url=url, params={'lat':lat, 'lng':lon}).json())
+    resp.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200'
+    return resp
 
 @app.route('/nominatim')
 def nominatim():

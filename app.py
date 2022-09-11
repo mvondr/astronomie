@@ -37,8 +37,6 @@ def index():
     }
     getLocation();
 
-
-
 </script>
 </body>
 </html>
@@ -58,10 +56,6 @@ def nominatim():
     lon=request.args['lon']
     return requests.get(url=url, params={'format': 'jsonv2', 'lat':lat, 'lon':lon}).content
 @app.route('/geo-coordinates', methods=['GET'])
-def geoCoordinates():
-    lat=request.args['lat']
-    lon=request.args['lon']
-    return '{' + 'lat': {}, 'lon': {}'.format(lat, lon) + '}'
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT',5000))

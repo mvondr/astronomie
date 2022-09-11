@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, request
+from flask import Flask, request, Response
 app = Flask(__name__)
 
 @app.route('/')
@@ -47,7 +47,7 @@ def sunrise_sunset():
     url = 'https://api.sunrise-sunset.org/json'
     lat=request.args['lat']
     lon=request.args['lon']
-    resp = flask.Response(requests.get(url=url, params={'lat':lat, 'lng':lon}).json())
+    resp = Response(requests.get(url=url, params={'lat':lat, 'lng':lon}).content)
     resp.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200'
     return resp
 

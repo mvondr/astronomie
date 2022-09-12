@@ -30,7 +30,7 @@ def index():
 
       var positionName = document.getElementById('positionName');
       let xhr = new XMLHttpRequest();
-      xhr.open('GET', '/nominatim?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude);
+      xhr.open('GET', '/nominatim-reverse?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude);
       xhr.send();
       xhr.onload = () => {positionName.innerHTML =  xhr.responseText;
         }
@@ -56,7 +56,7 @@ def nominatimReverse():
     url = 'https://nominatim.openstreetmap.org/reverse'
     lat=request.args['lat']
     lon=request.args['lon']
-    resp = Response()requests.get(url=url, params={'format': 'jsonv2', 'lat':lat, 'lon':lon}).content)
+    resp = Response(requests.get(url=url, params={'format': 'jsonv2', 'lat':lat, 'lon':lon}).content)
     resp.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200'
     return resp
 

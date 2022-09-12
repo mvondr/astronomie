@@ -51,12 +51,14 @@ def sunrise_sunset():
     resp.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200'
     return resp
 
-@app.route('/nominatim')
-def nominatim():
+@app.route('/nominatim-reverse')
+def nominatimReverse():
     url = 'https://nominatim.openstreetmap.org/reverse'
     lat=request.args['lat']
     lon=request.args['lon']
-    return requests.get(url=url, params={'format': 'jsonv2', 'lat':lat, 'lon':lon}).content
+    resp = Response()requests.get(url=url, params={'format': 'jsonv2', 'lat':lat, 'lon':lon}).content)
+    resp.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200'
+    return resp
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT',5000))

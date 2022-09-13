@@ -3,6 +3,8 @@ import requests
 from flask import Flask, request, Response
 app = Flask(__name__)
 
+allowed_origins = ['http://localhost:4200', 'https://mvondr.w3spaces.com']
+
 @app.route('/')
 def index():
     return '''
@@ -44,20 +46,24 @@ def index():
 
 @app.route('/sunrise-sunset')
 def sunrise_sunset():
+    global allowed_origins
     url = 'https://api.sunrise-sunset.org/json'
     lat=request.args['lat']
     lon=request.args['lon']
     resp = Response(requests.get(url=url, params={'lat':lat, 'lng':lon}).content)
-    resp.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200'
+    if request.headers['Origin'] in allowed_origins:
+        resp.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
     return resp
 
 @app.route('/nominatim-reverse')
 def nominatimReverse():
+    global allowed_origins
     url = 'https://nominatim.openstreetmap.org/reverse'
     lat=request.args['lat']
     lon=request.args['lon']
     resp = Response(requests.get(url=url, params={'format': 'jsonv2', 'lat':lat, 'lon':lon}).content)
-    resp.headers['Access-Control-Allow-Origin'] = 'http://localhost:4200'
+    if request.headers['Origin'] in allowed_origins:
+        resp.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
     return resp
 
 if __name__ == '__main__':

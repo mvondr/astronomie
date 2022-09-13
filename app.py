@@ -51,8 +51,9 @@ def sunrise_sunset():
     lat=request.args['lat']
     lon=request.args['lon']
     resp = Response(requests.get(url=url, params={'lat':lat, 'lng':lon}).content)
-    if request.headers['Origin'] in allowed_origins:
-        resp.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+    if request.headers.get('Origin'):
+        if request.headers['Origin'] in allowed_origins:
+            resp.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
     return resp
 
 @app.route('/nominatim-reverse')
@@ -62,8 +63,9 @@ def nominatimReverse():
     lat=request.args['lat']
     lon=request.args['lon']
     resp = Response(requests.get(url=url, params={'format': 'jsonv2', 'lat':lat, 'lon':lon}).content)
-    if request.headers['Origin'] in allowed_origins:
-        resp.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+    if request.headers.get('Origin'):
+        if request.headers['Origin'] in allowed_origins:
+            resp.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
     return resp
 
 if __name__ == '__main__':

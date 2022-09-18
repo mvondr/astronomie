@@ -50,7 +50,7 @@ def sunrise_sunset():
     url = 'https://api.sunrise-sunset.org/json'
     lat=request.args['lat']
     lon=request.args['lon']
-    resp = Response(requests.get(url=url, params={'lat':lat, 'lng':lon}).content)
+    resp = Response(requests.get(url=url, params={'lat':lat, 'lng':lon, 'formated':0}).content)
     if request.headers.get('Origin'):
         if request.headers['Origin'] in allowed_origins:
             resp.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
